@@ -45,7 +45,7 @@ jobs:
       with:
         files: |
           ./output/test.pdf
-        TAG_NAME:
+        tag_name:
           ${{ steps.set_tag_outputs.TAG_NAME }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
