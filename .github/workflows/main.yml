@@ -17,18 +17,6 @@ jobs:
       contents: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.event.inputs.tag }}
-
-    - name: Build with Docker
-      run: |
-        mkdir output
-        docker compose -f ./.devcontainer/docker-compose.yml build
-        docker compose -f ./.devcontainer/docker-compose.yml up -d
-        docker exec $(docker ps -q --filter name=latex) sh -c "cd /home/src && lualatex test"
-        docker cp $(docker ps -q --filter name=latex):/home/src/test.pdf ./output/test.pdf
     - name: Set tag name from ref
       id: set_tag
       run: |
@@ -40,12 +28,25 @@ jobs:
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ steps.set_tag.outputs.TAG_NAME }}
+
+    - name: Build with Docker
+      run: |
+        mkdir output
+        docker compose -f ./.devcontainer/docker-compose.yml build
+        docker compose -f ./.devcontainer/docker-compose.yml up -d
+        docker exec $(docker ps -q --filter name=latex) sh -c "cd /home/src && lualatex test"
+        docker cp $(docker ps -q --filter name=latex):/home/src/test.pdf ./output/test.pdf
+    
     - name: Upload release asset
       uses: softprops/action-gh-release@v2.0.2
       with:
         files: |
           ./output/test.pdf
         tag_name:
-          ${{ steps.set_tag_outputs.TAG_NAME }}
+          ${{ steps.set_tag.outputs.TAG_NAME }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
