@@ -9,6 +9,12 @@ on:
       tag:
         description: 'Specify the tag to build and release'
         required: true
+      name:
+        description: 'Specify the name of this release'
+        required: true
+      body:
+        description: 'Describe for this release'
+        required: false
 
 jobs:
   build-and-release:
@@ -48,5 +54,9 @@ jobs:
           ./output/test.pdf
         tag_name:
           ${{ steps.set_tag.outputs.TAG_NAME }}
+        name:
+          ${{ github.event.inputs.name }}
+        body:
+          ${{ github.event.inputs.body }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
