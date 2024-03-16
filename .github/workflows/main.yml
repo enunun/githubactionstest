@@ -34,10 +34,10 @@ jobs:
       run: |
         if [ -n "${{ github.event.inputs.tag }}" ]; then
           echo "Using tag from manual inputs"
-          echo ::set-output name=TAG_NAME::${{ github.event.inputs.tag }}
+          echo "TAG_NAME=github.event.inputs.tag}" >> $GITHUB_OUTPUT
         else
           echo "Using tag from push event"
-          echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
 
     - name: Upload release asset
