@@ -22,7 +22,7 @@ jobs:
       run: |
         if [ -n "${{ github.event.inputs.tag }}" ]; then
           echo "Using tag from manual inputs"
-          echo "TAG_NAME=github.event.inputs.tag}" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=${github.event.inputs.tag}" >> $GITHUB_OUTPUT
         else
           echo "Using tag from push event"
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
