@@ -53,7 +53,7 @@ jobs:
           echo "BODY=${{ github.event.inputs.body }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "BODY=Automatic release on the tag '${{ steps.set_tag.outputs.TAG_NAME}} pushed'" >> $GITHUB_OUTPUT
+          echo "BODY=Automatic release on the tag '${{ steps.set_tag.outputs.TAG_NAME}}' pushed" >> $GITHUB_OUTPUT
         fi
 
     - name: Checkout repository
