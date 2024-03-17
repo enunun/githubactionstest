@@ -51,29 +51,10 @@ jobs:
           echo "RELEASE_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
 
-    - name: Get tag comment
-      id: get_tag_comment
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const tagRef = context.ref;
-          const owner = context.repo.owner;
-          const repo = context.repo.repo;
-          const tagInfo = await github.rest.git.getTag({
-            owner,
-            repo,
-            tagRef
-          });
-          const message = tagInfo.data.message
-          //const message = tagRef;
-          console.log(owner);
-          console.log(repo);
-          console.log(message);
-          return message;
-        result-encoding: string
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    - name: Get tag message
+      id: get_tag_message
+        echo "MESSAGE=$(git tag -l --format='%(contents:subject)' ${{ github.ref_name }})" >> $GITHUB_OUTPUT
+    
     - name: Set body
       id: set_body
       run: |
@@ -82,7 +63,7 @@ jobs:
           echo "BODY=${{ github.event.inputs.body }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "BODY=${{ steps.get_tag_comment.outputs.result }}" >> $GITHUB_OUTPUT
+          echo "BODY=${{ steps.get_tag_message.outputs.message }}" >> $GITHUB_OUTPUT
         fi
 
     - name: Build with Docker
