@@ -32,7 +32,7 @@ jobs:
           echo "TAG_NAME=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=${{ github.ref_name }}" >> $GITHUB_OUTPUT
         fi
         echo "$TAG_NAME"
         
