@@ -56,7 +56,7 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
-          const tagRef = context.payload.ref;
+          const tagRef = context.ref;
           const tagInfo = await github.git.getTag({
             owner: context.repo.owner,
             repo: context.repo.repo,
