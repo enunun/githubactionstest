@@ -46,7 +46,7 @@ jobs:
         fi
 
     - name: Get tag comment
-        id: get_tag_comment
+        id: get_comment
         uses: actions/github-script@v7
         with:
           script: |
