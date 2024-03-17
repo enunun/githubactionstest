@@ -23,6 +23,12 @@ jobs:
       contents: write
 
     steps:
+    
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ steps.set_tag.outputs.TAG_NAME }}
+    
     - name: Set tag name
       id: set_tag
       run: |
@@ -72,11 +78,6 @@ jobs:
           echo "On push"
           echo "BODY=${{ steps.get_tag_comment.outputs.result }}" >> $GITHUB_OUTPUT
         fi
-
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ steps.set_tag.outputs.TAG_NAME }}
 
     - name: Build with Docker
       run: |
