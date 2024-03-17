@@ -59,7 +59,7 @@ jobs:
           const tagRef = context.ref;
           const owner = context.repo.owner;
           const repo = context.repo.repo;
-          const tagInfo = await github.git.getTag({
+          const tagInfo = await github.rest.git.getTag({
             owner,
             repo,
             tagRef
