@@ -58,14 +58,14 @@ jobs:
         script: |
           const ref = github.ref;
           console.log(ref);
-          const tagRef = `refs/tags/${github.ref.split('/').pop()}`;
-          const tagInfo = await github.git.getTag({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            tag_sha: tagRef
-          });
-          console.log(tagInfo.data.message);
-          return tagInfo.data.message;
+          //const tagRef = `refs/tags/${github.ref.split('/').pop()}`;
+          //const tagInfo = await github.git.getTag({
+          //  owner: context.repo.owner,
+          //  repo: context.repo.repo,
+          //  tag_sha: tagRef
+          //});
+          //console.log(tagInfo.data.message);
+          return ref;
         result-encoding: string
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
