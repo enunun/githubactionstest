@@ -56,8 +56,7 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
-          const ref = github.ref;
-          console.log(ref);
+          console.log(context);
           //const tagRef = `refs/tags/${github.ref.split('/').pop()}`;
           //const tagInfo = await github.git.getTag({
           //  owner: context.repo.owner,
