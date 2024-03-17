@@ -27,7 +27,7 @@ jobs:
       id: set_tag
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          echo "Mannually"
+          echo "Manually"
           echo "TAG_NAME=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
@@ -38,7 +38,7 @@ jobs:
       id: set_release_name
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          echo "Mannually"
+          echo "Manually"
           echo "RELEASE_NAME=${{ github.event.inputs.name }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
@@ -49,7 +49,7 @@ jobs:
       id: set_body
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          echo "Mannually"
+          echo "Manually"
           echo "BODY=${{ github.event.inputs.body }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
