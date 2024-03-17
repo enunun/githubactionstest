@@ -23,12 +23,6 @@ jobs:
       contents: write
 
     steps:
-    
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ steps.set_tag.outputs.TAG_NAME }}
-    
     - name: Set tag name
       id: set_tag
       run: |
@@ -39,8 +33,12 @@ jobs:
           echo "On push"
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
-        echo "$GITHUB_OUTPUT"
-
+        echo "$TAG_NAME"
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ steps.set_tag.outputs.TAG_NAME }}
+    
     - name: Set release name
       id: set_release_name
       run: |
@@ -51,13 +49,13 @@ jobs:
           echo "On push"
           echo "RELEASE_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
-        echo "$GITHUB_OUTPUT"
+        echo "$RELEASE_NAME"
 
     - name: Get tag message
       id: get_tag_message
       run: |
         echo "TAG_MESSAGE=$(git tag -l --format='%(subject)' ${{ steps.set_tag.outputs.TAG_NAME }})" >> $GITHUB_OUTPUT
-        echo "$GITHUB_OUTPUT"
+        echo "$TAG_MESSAGE"
     
     - name: Set body
       id: set_body
@@ -69,7 +67,7 @@ jobs:
           echo "On push"
           echo "BODY=${{ steps.get_tag_message.outputs.TAG_MESSAGE }}" >> $GITHUB_OUTPUT
         fi
-        echo "$GITHUB_OUTPUT"
+        echo "$BODY"
 
     - name: Build with Docker
       run: |
