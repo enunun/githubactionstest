@@ -57,14 +57,15 @@ jobs:
       with:
         script: |
           const tagRef = context.ref;
-          //const tagInfo = await github.git.getTag({
-          //  owner: context.repo.owner,
-          //  repo: context.repo.repo,
-          //  tag_sha: tagRef
-          //});
-          //const message = tagInfo.data.message
-          console.log(tagRef);
-          return tagRef;
+          const [owner, repo] = context.repo();
+          const tagInfo = await github.git.getTag({
+            owner: owner,
+            repo: repo,
+            tag_sha: tagRef
+          });
+          const message = tagInfo.data.message
+          console.log(message);
+          return message;
         result-encoding: string
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
