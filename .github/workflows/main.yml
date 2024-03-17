@@ -46,21 +46,21 @@ jobs:
         fi
 
     - name: Get tag comment
-        id: get_comment
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const tagRef = `refs/tags/${GITHUB_REF.split('/').pop()}`;
-            const tagInfo = await github.git.getTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_sha: tagRef
-            });
-            console.log(tagInfo.data.message);
-            return tagInfo.data.message;
-          result-encoding: string
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      id: get_tag_comment
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const tagRef = `refs/tags/${GITHUB_REF.split('/').pop()}`;
+          const tagInfo = await github.git.getTag({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            tag_sha: tagRef
+          });
+          console.log(tagInfo.data.message);
+          return tagInfo.data.message;
+        result-encoding: string
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set body
       id: set_body
