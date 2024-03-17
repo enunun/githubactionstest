@@ -65,6 +65,7 @@ jobs:
           //  tag_sha: tagRef
           //});
           //const message = tagInfo.data.message
+          const message = tagRef;
           console.log(owner);
           console.log(repo);
           console.log(message);
