@@ -24,8 +24,8 @@ jobs:
       
     steps:
     
-    - name: Set tag name
-      id: set_tag
+    - name: Get tag name
+      id: get_tag_name
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
           echo "Manually"
@@ -49,13 +49,13 @@ jobs:
           echo "RELEASE_NAME=${{ github.event.inputs.name }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "RELEASE_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "RELEASE_NAME=${{ steps.get_tag_name.outputs.TAG_NAME" >> $GITHUB_OUTPUT
         fi
 
     - name: Get tag message
       id: get_tag_message
       run: |
-        echo "TAG_MESSAGE=$(git tag -l --format='%(subject)' ${{ steps.set_tag.outputs.TAG_NAME }})" >> $GITHUB_OUTPUT
+        echo "TAG_MESSAGE=$(git tag -l --format='%(subject)' ${{ steps.get_tag.outputs.TAG_NAME }})" >> $GITHUB_OUTPUT
     
     - name: Set body
       id: set_body
