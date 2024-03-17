@@ -39,6 +39,7 @@ jobs:
           echo "On push"
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
+        echo "$GITHUB_OUTPUT"
 
     - name: Set release name
       id: set_release_name
@@ -50,11 +51,13 @@ jobs:
           echo "On push"
           echo "RELEASE_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
+        echo "$GITHUB_OUTPUT"
 
     - name: Get tag message
       id: get_tag_message
       run: |
-        echo "MESSAGE=$(git tag -l --format='%(subject)' ${{ steps.set_tag.outputs.TAG_NAME }})" >> $GITHUB_OUTPUT
+        echo "TAG_MESSAGE=$(git tag -l --format='%(subject)' ${{ steps.set_tag.outputs.TAG_NAME }})" >> $GITHUB_OUTPUT
+        echo "$GITHUB_OUTPUT"
     
     - name: Set body
       id: set_body
@@ -64,8 +67,9 @@ jobs:
           echo "BODY=${{ github.event.inputs.body }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "BODY=${{ steps.get_tag_message.outputs.message }}" >> $GITHUB_OUTPUT
+          echo "BODY=${{ steps.get_tag_message.outputs.TAG_MESSAGE }}" >> $GITHUB_OUTPUT
         fi
+        echo "$GITHUB_OUTPUT"
 
     - name: Build with Docker
       run: |
