@@ -54,7 +54,7 @@ jobs:
     - name: Get tag message
       id: get_tag_message
       run: |
-        echo "MESSAGE=$(git tag -l --format='%(contents:subject)' ${{ github.ref_name }})" >> $GITHUB_OUTPUT
+        echo "MESSAGE=$(git tag -l --format='%(subject)' ${{ github.ref_name }})" >> $GITHUB_OUTPUT
     
     - name: Set body
       id: set_body
