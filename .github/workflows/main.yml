@@ -21,8 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
+      
     steps:
+    
     - name: Set tag name
       id: set_tag
       run: |
@@ -34,11 +35,13 @@ jobs:
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
         echo "$TAG_NAME"
+        
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
+        fetch-depth: 0
         ref: ${{ steps.set_tag.outputs.TAG_NAME }}
-    
+   
     - name: Set release name
       id: set_release_name
       run: |
