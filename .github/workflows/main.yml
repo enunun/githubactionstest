@@ -49,7 +49,7 @@ jobs:
           echo "RELEASE_NAME=${{ github.event.inputs.name }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "RELEASE_NAME=${{ steps.get_tag_name.outputs.TAG_NAME" >> $GITHUB_OUTPUT
+          echo "RELEASE_NAME=${{ steps.get_tag_name.outputs.TAG_NAME }}" >> $GITHUB_OUTPUT
         fi
 
     - name: Get tag message
