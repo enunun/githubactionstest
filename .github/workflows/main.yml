@@ -39,7 +39,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        ref: ${{ steps.set_tag.outputs.TAG_NAME }}
+        ref: ${{ steps.get_tag_name.outputs.TAG_NAME }}
    
     - name: Set release name
       id: set_release_name
